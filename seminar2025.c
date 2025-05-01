@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+/* #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
 int main(){
@@ -10,3 +10,5 @@ int main(){
 	printf("Varsta dvs. este: %d ani", varsta);
 	return 0;
 }
+
+*/
