@@ -18,11 +18,11 @@ struct LaptopGaming citireLaptopDeLaTastatura() {
 
     printf("Introdu id-ul laptopului: ");
     scanf("%d", &laptop.id);
-    getchar(); 
+    getchar();
 
     printf("Introdu modelul laptop-ului: ");
     fgets(buffer, 100, stdin);
-    buffer[strcspn(buffer, "\n")] = 0; 
+    buffer[strcspn(buffer, "\n")] = 0;
     laptop.model = (char*)malloc(strlen(buffer) + 1); //alocarea dinamica pentru model de laptop
     strcpy(laptop.model, buffer);
 
@@ -41,16 +41,14 @@ float calculeazaFrecventaMHz(struct LaptopGaming l) {
 }
 
 
-
 //functie care afiseaza toate informatiile despre un laptop
 void afisareLaptop(struct LaptopGaming l) {
-    printf("\n--- Laptop Gaming ---\n");
-    printf("ID: %d\n", l.id);
-    printf("Model: %s\n", l.model);
-    printf("Memorie RAM: %d GB\n", l.memorieRam);
-    printf("Frecventa procesor: %.2f GHz (%.0f MHz)\n", l.frecventaProcesor, calculeazaFrecventaMHz(l));
+    printf("\n Laptop Gaming:\n");
+    printf("iD: %d\n", l.id);
+    printf("model: %s\n", l.model);
+    printf("memorie RAM: %d GB\n", l.memorieRam);
+    printf("frecventa procesor: %.2f GHz (%.0f MHz)\n", l.frecventaProcesor, calculeazaFrecventaMHz(l));
 }
-
 
 // functie de elibeare a memoria alocata dinamic
 void dezalocareLaptop(struct LaptopGaming* l) {
@@ -58,12 +56,23 @@ void dezalocareLaptop(struct LaptopGaming* l) {
     l->model = NULL;
 }
 
-
+// functie care modifica modelul unui laptop
+void modificaModelLaptop(struct LaptopGaming* l, const char* modelNou) {
+    free(l->model);
+    l->model = (char*)malloc(strlen(modelNou) + 1);
+    strcpy(l->model, modelNou);
+}
 
 int main() {
-    struct LaptopGaming laptop = citireLaptopDeLaTastatura(); 
-    afisareLaptop(laptop); 
-    dezalocareLaptop(&laptop); 
+    struct LaptopGaming laptop = citireLaptopDeLaTastatura();
+    afisareLaptop(laptop);
+
+ // modificare model de laptop
+    modificaModelLaptop(&laptop, "Asus TUF gaming");
+    printf("\nDupa modificarea modelului:\n");
+    afisareLaptop(laptop);
+
+    dezalocareLaptop(&laptop);
 
     return 0;
 }
