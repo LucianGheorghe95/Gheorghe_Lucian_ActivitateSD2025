@@ -1,7 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS
+/*#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 
 // definim structura LaptopGaming
 struct LaptopGaming {
@@ -10,6 +11,7 @@ struct LaptopGaming {
     int memorieRam;    // in gigabites
     float frecventaProcesor; // acesta este in ghz
 };
+
 
 // asta este functia care citeste un laptop de la tastatura  si il returnaza
 struct LaptopGaming citireLaptopDeLaTastatura() {
@@ -76,3 +78,5 @@ int main() {
 
     return 0;
 }
+
+*/
