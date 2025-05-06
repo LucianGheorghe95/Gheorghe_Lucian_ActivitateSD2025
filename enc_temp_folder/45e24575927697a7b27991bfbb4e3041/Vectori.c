@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -76,9 +76,7 @@ struct LaptopGaming* filtreazaLaptopuriCuRamMare(struct LaptopGaming* vector, in
     int k = 0;
     for (int i = 0; i < dim; i++) {
         if (vector[i].memorieRam >= 16) {
-            vectorNou[k].id = vector[i].id;
-            vectorNou[k].memorieRam = vector[i].memorieRam;
-            vectorNou[k].frecventaProcesor = vector[i].frecventaProcesor;
+            vectorNou[k] = vector[i];
             vectorNou[k].model = (char*)malloc(strlen(vector[i].model) + 1);
             strcpy(vectorNou[k].model, vector[i].model);
             k++;
@@ -97,7 +95,7 @@ struct LaptopGaming* mutaLaptopuriFrecventaMica(struct LaptopGaming* vector, int
         }
     }
 
-    //functie care muta laptopurile cu frecventa < 2.5 ghz
+ //functie care muta laptopurile cu frecventa < 2.5 ghz
     struct LaptopGaming* vectorNou = (struct LaptopGaming*)malloc((*dimNoua) * sizeof(struct LaptopGaming));
     int k = 0;
     for (int i = 0; i < dim; i++) {
@@ -115,6 +113,7 @@ struct LaptopGaming* mutaLaptopuriFrecventaMica(struct LaptopGaming* vector, int
 
     return vectorNou;
 }
+    
 
 int main() {
     int nrLaptopuri = 5;
@@ -135,14 +134,6 @@ int main() {
     printf("\n- Laptopuri cu cel putin 16 GB RAM -\n");
     afisareVectorLaptopuri(laptopuriRamMare, nrLaptopuriFiltrate);
 
-    // 🔁 mutare inainte de eliberare, ca sa fie valid vectorul
-    int nrLaptopuriFrecventaMica = 0;
-    struct LaptopGaming* laptopuriFrecventaMica = mutaLaptopuriFrecventaMica(laptopuri, nrLaptopuri, &nrLaptopuriFrecventaMica);
-
-    printf("\n- Laptopuri cu frecventa procesor mai mica de 2.5 GHz -\n");
-    afisareVectorLaptopuri(laptopuriFrecventaMica, nrLaptopuriFrecventaMica);
-
-    //dezalocare vectori
     for (int i = 0; i < nrLaptopuri; i++) {
         dezalocareLaptop(&laptopuri[i]);
     }
@@ -153,6 +144,14 @@ int main() {
     }
     free(laptopuriRamMare);
 
+//apelare functie pt frecventa mica
+    int nrLaptopuriFrecventaMica = 0;
+    struct LaptopGaming* laptopuriFrecventaMica = mutaLaptopuriFrecventaMica(laptopuri, nrLaptopuri, &nrLaptopuriFrecventaMica);
+
+    printf("\n- Laptopuri cu frecventa procesor mai mica de 2.5 GHz -\n");
+    afisareVectorLaptopuri(laptopuriFrecventaMica, nrLaptopuriFrecventaMica);
+
+    //dezalocare vecotr frecventa mica
     for (int i = 0; i < nrLaptopuriFrecventaMica; i++) {
         dezalocareLaptop(&laptopuriFrecventaMica[i]);
     }
