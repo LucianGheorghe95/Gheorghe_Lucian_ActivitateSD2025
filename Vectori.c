@@ -116,6 +116,35 @@ struct LaptopGaming* mutaLaptopuriFrecventaMica(struct LaptopGaming* vector, int
     return vectorNou;
 }
 
+//functie care concateneaza doi vectori de laptopuri
+struct LaptopGaming* concateneazaVectori(struct LaptopGaming* v1, int dim1, struct LaptopGaming* v2, int dim2, int* dimRezultat) {
+    *dimRezultat = dim1 + dim2;
+    struct LaptopGaming* vectorNou = (struct LaptopGaming*)malloc((*dimRezultat) * sizeof(struct LaptopGaming));
+
+    int k = 0;
+    // copiem din primul vector
+    for (int i = 0; i < dim1; i++) {
+        vectorNou[k].id = v1[i].id;
+        vectorNou[k].memorieRam = v1[i].memorieRam;
+        vectorNou[k].frecventaProcesor = v1[i].frecventaProcesor;
+        vectorNou[k].model = (char*)malloc(strlen(v1[i].model) + 1);
+        strcpy(vectorNou[k].model, v1[i].model);
+        k++;
+    }
+
+    // copiem din al doilea vector
+    for (int i = 0; i < dim2; i++) {
+        vectorNou[k].id = v2[i].id;
+        vectorNou[k].memorieRam = v2[i].memorieRam;
+        vectorNou[k].frecventaProcesor = v2[i].frecventaProcesor;
+        vectorNou[k].model = (char*)malloc(strlen(v2[i].model) + 1);
+        strcpy(vectorNou[k].model, v2[i].model);
+        k++;
+    }
+
+    return vectorNou;
+}
+
 int main() {
     int nrLaptopuri = 5;
     struct LaptopGaming* laptopuri = (struct LaptopGaming*)malloc(nrLaptopuri * sizeof(struct LaptopGaming));
@@ -134,8 +163,18 @@ int main() {
 
     printf("\n- Laptopuri cu cel putin 16 GB RAM -\n");
     afisareVectorLaptopuri(laptopuriRamMare, nrLaptopuriFiltrate);
+    
+    
+    // concatenam cele doua rezultate filtrate
+    int dimVectorConcatenat = 0;
+    struct LaptopGaming* vectorConcatenat = concateneazaVectori(laptopuriRamMare, nrLaptopuriFiltrate,
+        laptopuriFrecventaMica, nrLaptopuriFrecventaMica,
+        &dimVectorConcatenat);
 
-    // 🔁 mutare inainte de eliberare, ca sa fie valid vectorul
+    printf("\n- vector concatenat RAM >= 16 GB + frecventa < 2.5 ghz -\n");
+    afisareVectorLaptopuri(vectorConcatenat, dimVectorConcatenat);
+
+    // mutare inainte de eliberare, ca sa fie valid vectorul
     int nrLaptopuriFrecventaMica = 0;
     struct LaptopGaming* laptopuriFrecventaMica = mutaLaptopuriFrecventaMica(laptopuri, nrLaptopuri, &nrLaptopuriFrecventaMica);
 
@@ -157,6 +196,11 @@ int main() {
         dezalocareLaptop(&laptopuriFrecventaMica[i]);
     }
     free(laptopuriFrecventaMica);
+
+    for (int i = 0; i < dimVectorConcatenat; i++) {
+        dezalocareLaptop(&vectorConcatenat[i]);
+    }
+    free(vectorConcatenat);
 
     return 0;
 }
