@@ -24,5 +24,8 @@
     <ClCompile Include="Vectori.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Fisiere.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
