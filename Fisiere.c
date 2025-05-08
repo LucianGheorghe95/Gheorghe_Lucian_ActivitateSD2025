@@ -65,13 +65,46 @@ void modificaModelLaptop(struct LaptopGaming* l, const char* modelNou) {
     strcpy(l->model, modelNou);
 }
 
+
+void salvareLaptopuriInFisier(const char* numeFisier) {
+    FILE* f = fopen(numeFisier, "w");
+    if (!f) {
+        perror("eroare cand ai deschis fisierul");
+        return;
+    }
+
+    struct LaptopGaming laptopuri[10] = {
+        {1, "Predator", 16, 2.8},
+        {2, "Legion", 32, 3.2},
+        {3, "tuf", 8, 2.3},
+        {4, "rog", 16, 2.9},
+        {5, "aspire", 12, 2.0},
+        {6, "alienware", 64, 3.8},
+        {7, "msi", 16, 2.5},
+        {8, "hp", 24, 3.0},
+        {9, "thibkpad", 8, 1.8},
+        {10, "dell G5", 16, 2.6}
+    };
+
+    for (int i = 0; i < 10; i++) {
+        fprintf(f, "%d %s %d %.2f\n", laptopuri[i].id, laptopuri[i].model, laptopuri[i].memorieRam, laptopuri[i].frecventaProcesor);
+    }
+
+    fclose(f);
+    printf("laptopurile au fost salvate in fisierul %s\n", numeFisier);
+}
+
 int main() {
+    
+    salvareLaptopuriInFisier("laptopuri.txt"); // apelare functie care scrie 10 laptopuri
+
+    
     struct LaptopGaming laptop = citireLaptopDeLaTastatura();
     afisareLaptop(laptop);
 
-    // modificare model de laptop
-    modificaModelLaptop(&laptop, "Asus TUF gaming");
-    printf("\nDupa modificarea modelului:\n");
+    //modificare model de laptop
+    modificaModelLaptop(&laptop, "asus TUF gaming");
+    printf("\ndupa modificarea modelului:\n");
     afisareLaptop(laptop);
 
     dezalocareLaptop(&laptop);
