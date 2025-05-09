@@ -94,9 +94,50 @@ void salvareLaptopuriInFisier(const char* numeFisier) {
     printf("laptopurile au fost salvate in fisierul %s\n", numeFisier);
 }
 
+struct LaptopGaming* citesteLaptopuriDinFisier(const char* numeFisier, int* dimensiune) {
+    FILE* f = fopen(numeFisier, "r");
+    if (!f) {
+        perror("eroare la deschiderea fisierului");
+        *dimensiune = 0;
+        return NULL;
+    }
+
+    struct LaptopGaming* laptopuri = (struct LaptopGaming*)malloc(10 * sizeof(struct LaptopGaming));
+    *dimensiune = 0;
+
+    while (!feof(f)) {
+        struct LaptopGaming l;
+        char buffer[100];
+
+        if (fscanf(f, "%d %s %d %f", &l.id, buffer, &l.memorieRam, &l.frecventaProcesor) == 4) {
+            l.model = (char*)malloc(strlen(buffer) + 1);
+            strcpy(l.model, buffer);
+            laptopuri[*dimensiune] = l;
+            (*dimensiune)++;
+        }
+    }
+
+    fclose(f);
+    return laptopuri;
+}
+
 int main() {
     
     salvareLaptopuriInFisier("laptopuri.txt"); // apelare functie care scrie 10 laptopuri
+
+    // 
+    int nrLaptopuriCitite = 0;  // citire din fisier in vector
+    struct LaptopGaming* vectorCitit = citesteLaptopuriDinFisier("laptopuri.txt", &nrLaptopuriCitite);
+
+    printf("\nLaptopuri citite din fisier:\n");
+    for (int i = 0; i < nrLaptopuriCitite; i++) {
+        afisareLaptop(vectorCitit[i]);
+    }
+
+    for (int i = 0; i < nrLaptopuriCitite; i++) {
+        dezalocareLaptop(&vectorCitit[i]);
+    }
+    free(vectorCitit);
 
     
     struct LaptopGaming laptop = citireLaptopDeLaTastatura();

@@ -1,0 +1,10 @@
+1 Predator 16 2.80
+2 Legion 32 3.20
+3 tuf 8 2.30
+4 rog 16 2.90
+5 aspire 12 2.00
+6 alienware 64 3.80
+7 msi 16 2.50
+8 hp 24 3.00
+9 thibkpad 8 1.80
+10 dell G5 16 2.60
