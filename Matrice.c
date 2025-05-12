@@ -1,4 +1,3 @@
-/*
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
@@ -123,7 +122,7 @@ struct LaptopGaming* citesteLaptopuriDinFisier(const char* numeFisier, int* dime
 }
 
 int main() {
-    
+
     salvareLaptopuriInFisier("laptopuri.txt"); // apelare functie care scrie 10 laptopuri
 
     // 
@@ -140,7 +139,7 @@ int main() {
     }
     free(vectorCitit);
 
-    
+
     struct LaptopGaming laptop = citireLaptopDeLaTastatura();
     afisareLaptop(laptop);
 
@@ -153,6 +152,3 @@ int main() {
 
     return 0;
 }
-
-
-*/

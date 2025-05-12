@@ -27,5 +27,8 @@
     <ClCompile Include="Fisiere.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Matrice.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
