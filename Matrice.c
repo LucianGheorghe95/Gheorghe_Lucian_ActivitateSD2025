@@ -121,12 +121,63 @@ struct LaptopGaming* citesteLaptopuriDinFisier(const char* numeFisier, int* dime
     return laptopuri;
 }
 
+e o matrice de laptopuri grupate dupa RAM
+struct LaptopGaming** creeazaMatriceDupaRam(struct LaptopGaming* vector, int dim, int* nrLinii, int** dimensiuniLinii) {
+    int maxRam = 0;
+
+    for (int i = 0; i < dim; i++) {
+        if (vector[i].memorieRam > maxRam) {
+            maxRam = vector[i].memorieRam;
+        }
+    }
+
+    *nrLinii = maxRam / 8 + 1;
+    struct LaptopGaming** matrice = (struct LaptopGaming**)malloc((*nrLinii) * sizeof(struct LaptopGaming*));
+    *dimensiuniLinii = (int*)calloc(*nrLinii, sizeof(int));
+    int* contor = (int*)calloc(*nrLinii, sizeof(int));
+
+    for (int i = 0; i < dim; i++) {
+        int linie = vector[i].memorieRam / 8;
+        (*dimensiuniLinii)[linie]++;
+    }
+
+    for (int i = 0; i < *nrLinii; i++) {
+        matrice[i] = (struct LaptopGaming*)malloc((*dimensiuniLinii)[i] * sizeof(struct LaptopGaming));
+    }
+
+    for (int i = 0; i < dim; i++) {
+        int linie = vector[i].memorieRam / 8;
+        int poz = contor[linie];
+
+        matrice[linie][poz].id = vector[i].id;
+        matrice[linie][poz].memorieRam = vector[i].memorieRam;
+        matrice[linie][poz].frecventaProcesor = vector[i].frecventaProcesor;
+        matrice[linie][poz].model = (char*)malloc(strlen(vector[i].model) + 1);
+        strcpy(matrice[linie][poz].model, vector[i].model);
+
+        contor[linie]++;
+    }
+
+    free(contor);
+    return matrice;
+}
+
+// functie care afiseaza matricea de laptopuri
+void afiseazaMatriceLaptopuri(struct LaptopGaming** matrice, int nrLinii, int* dimensiuniLinii) {
+    for (int i = 0; i < nrLinii; i++) {
+        printf("\n--- Linia %d (RAM = %d GB) ---\n", i, i * 8);
+        for (int j = 0; j < dimensiuniLinii[i]; j++) {
+            afisareLaptop(matrice[i][j]);
+        }
+    }
+}
+
 int main() {
+    // salvam in fisier 10 laptopuri
+    salvareLaptopuriInFisier("laptopuri.txt");
 
-    salvareLaptopuriInFisier("laptopuri.txt"); // apelare functie care scrie 10 laptopuri
-
-    // 
-    int nrLaptopuriCitite = 0;  // citire din fisier in vector
+    // citire din fisier in vector
+    int nrLaptopuriCitite = 0;
     struct LaptopGaming* vectorCitit = citesteLaptopuriDinFisier("laptopuri.txt", &nrLaptopuriCitite);
 
     printf("\nLaptopuri citite din fisier:\n");
@@ -134,21 +185,39 @@ int main() {
         afisareLaptop(vectorCitit[i]);
     }
 
+    // creare matrice grupata dupa RAM
+    int nrLinii = 0;
+    int* dimensiuniLinii = NULL;
+    struct LaptopGaming** matrice = creeazaMatriceDupaRam(vectorCitit, nrLaptopuriCitite, &nrLinii, &dimensiuniLinii);
+
+    // afisare matrice
+    printf("\n--- Afisare matrice grupata dupa RAM ---\n");
+    afiseazaMatriceLaptopuri(matrice, nrLinii, dimensiuniLinii);
+
+    // citire, modificare si afisare laptop individual
+    struct LaptopGaming laptop = citireLaptopDeLaTastatura();
+    afisareLaptop(laptop);
+
+    modificaModelLaptop(&laptop, "asus TUF gaming");
+    printf("\ndupa modificarea modelului:\n");
+    afisareLaptop(laptop);
+    dezalocareLaptop(&laptop);
+
+    // dezalocare pentru matrice
+    for (int i = 0; i < nrLinii; i++) {
+        for (int j = 0; j < dimensiuniLinii[i]; j++) {
+            dezalocareLaptop(&matrice[i][j]);
+        }
+        free(matrice[i]);
+    }
+    free(matrice);
+    free(dimensiuniLinii);
+
+    // abia acum e safe sa dezalocam vectorul
     for (int i = 0; i < nrLaptopuriCitite; i++) {
         dezalocareLaptop(&vectorCitit[i]);
     }
     free(vectorCitit);
-
-
-    struct LaptopGaming laptop = citireLaptopDeLaTastatura();
-    afisareLaptop(laptop);
-
-    //modificare model de laptop
-    modificaModelLaptop(&laptop, "asus TUF gaming");
-    printf("\ndupa modificarea modelului:\n");
-    afisareLaptop(laptop);
-
-    dezalocareLaptop(&laptop);
 
     return 0;
 }
