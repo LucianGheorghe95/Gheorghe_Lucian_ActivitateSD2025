@@ -190,6 +190,8 @@ int main() {
     int* dimensiuniLinii = NULL;
     struct LaptopGaming** matrice = creeazaMatriceDupaRam(vectorCitit, nrLaptopuriCitite, &nrLinii, &dimensiuniLinii);
 
+    sorteazaLiniileDupaNumarElemente(&matrice, dimensiuniLinii, nrLinii);
+
     // afisare matrice
     printf("\n--- Afisare matrice grupata dupa RAM ---\n");
     afiseazaMatriceLaptopuri(matrice, nrLinii, dimensiuniLinii);
