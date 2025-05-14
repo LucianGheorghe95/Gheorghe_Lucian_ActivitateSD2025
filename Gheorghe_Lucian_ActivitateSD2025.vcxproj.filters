@@ -30,5 +30,8 @@
     <ClCompile Include="Matrice.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="student.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

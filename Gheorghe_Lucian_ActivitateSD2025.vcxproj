@@ -131,6 +131,7 @@
     <ClCompile Include="Matrice.c" />
     <ClCompile Include="seminar2025.c" />
     <ClCompile Include="StructuriSiFunctii.c" />
+    <ClCompile Include="student.c" />
     <ClCompile Include="Vectori.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
