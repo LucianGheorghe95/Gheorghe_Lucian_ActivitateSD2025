@@ -35,6 +35,17 @@ struct Student citireStudentDeLaTastatura() {
     return s;
 }
 
+
+// functie care afiseaza un student
+void afisareStudent(struct Student s) {
+    printf("\nStudent:\n");
+    printf("ID: %d\n", s.id);
+    printf("Nume: %s\n", s.nume);
+    printf("Medie: %.2f\n", s.medie);
+    printf("An de studiu: %d\n", s.anStudiu);
+}
+
+
 int main() {
 
     return 0;
