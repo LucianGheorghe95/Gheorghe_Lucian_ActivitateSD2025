@@ -45,6 +45,12 @@ void afisareStudent(struct Student s) {
     printf("An de studiu: %d\n", s.anStudiu);
 }
 
+//dezalocarememoria alocata pentru un student
+void dezalocareStudent(struct Student* s) {
+    free(s->nume);
+    s->nume = NULL;
+}
+
 
 int main() {
 
