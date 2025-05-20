@@ -51,6 +51,29 @@ void dezalocareStudent(struct Student* s) {
     s->nume = NULL;
 }
 
+// functie ce salveaza studentii in fisier
+void salvareStudentiInFisier(const char* numeFisier) {
+    FILE* f = fopen(numeFisier, "w");
+    if (!f) {
+        perror("eroare la deschiderea fisierului");
+        return;
+    }
+
+    struct Student studenti[5] = {
+        {1, "AnaPopescu", 9.5, 2},
+        {2, "IonIonescu", 8.3, 1},
+        {3, "MariaStan", 7.9, 3},
+        {4, "GeorgeEnescu", 6.5, 2},
+        {5, "AndreiVasile", 9.8, 1}
+    };
+
+    for (int i = 0; i < 5; i++) {
+        fprintf(f, "%d %s %.2f %d\n", studenti[i].id, studenti[i].nume, studenti[i].medie, studenti[i].anStudiu);
+    }
+
+    fclose(f);
+}
+
 
 int main() {
 
