@@ -74,6 +74,33 @@ void salvareStudentiInFisier(const char* numeFisier) {
     fclose(f);
 }
 
+// functie care citeste studentii din fisier si ii returneaza intr-un vector
+struct Student* citesteStudentiDinFisier(const char* numeFisier, int* dimensiune) {
+    FILE* f = fopen(numeFisier, "r");
+    if (!f) {
+        perror("Eroare la deschiderea fisierului");
+        *dimensiune = 0;
+        return NULL;
+    }
+
+    struct Student* studenti = (struct Student*)malloc(10 * sizeof(struct Student));
+    *dimensiune = 0;
+    char buffer[100];
+
+    while (!feof(f)) {
+        struct Student s;
+        if (fscanf(f, "%d %s %f %d", &s.id, buffer, &s.medie, &s.anStudiu) == 4) {
+            s.nume = (char*)malloc(strlen(buffer) + 1);
+            strcpy(s.nume, buffer);
+            studenti[*dimensiune] = s;
+            (*dimensiune)++;
+        }
+    }
+
+    fclose(f);
+    return studenti;
+}
+
 
 int main() {
 
