@@ -104,5 +104,31 @@ struct Student* citesteStudentiDinFisier(const char* numeFisier, int* dimensiune
 
 int main() {
 
+  //salvam studentii in fisier
+    salvareStudentiInFisier("studenti.txt");
+
+              //citim din fisier
+    int nrStudenti = 0;
+    struct Student* studenti = citesteStudentiDinFisier("studenti.txt", &nrStudenti);
+
+  //afisam toti studentii cititi
+    printf("\nStudenti cititi din fisier:\n");
+    for (int i = 0; i < nrStudenti; i++) {
+        afisareStudent(studenti[i]);
+    }
+
+   //citim un student de la tastatura
+    struct Student s = citireStudentDeLaTastatura();
+    afisareStudent(s);
+
+    //dezalocam memoria
+    for (int i = 0; i < nrStudenti; i++) {
+        dezalocareStudent(&studenti[i]);
+    }
+    free(studenti);
+
+    dezalocareStudent(&s);
+
+
     return 0;
 }
