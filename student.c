@@ -101,6 +101,35 @@ struct Student* citesteStudentiDinFisier(const char* numeFisier, int* dimensiune
     return studenti;
 }
 
+// functie ce filtreaza studentii cu media peste o valare data
+struct Student* filtreazaStudentiDupaMedie(struct Student* vector, int dim, int* dimNoua, float prag) {
+    *dimNoua = 0;
+
+    
+    for (int i = 0; i < dim; i++) {  
+        if (vector[i].medie > prag) {
+            (*dimNoua)++;
+        }
+    }
+
+    
+    struct Student* rezultat = (struct Student*)malloc((*dimNoua) * sizeof(struct Student));
+    int k = 0;
+    for (int i = 0; i < dim; i++) {
+        if (vector[i].medie > prag) {
+            rezultat[k].id = vector[i].id;
+            rezultat[k].medie = vector[i].medie;
+            rezultat[k].anStudiu = vector[i].anStudiu;
+
+            rezultat[k].nume = (char*)malloc(strlen(vector[i].nume) + 1);
+            strcpy(rezultat[k].nume, vector[i].nume);
+            k++;
+        }
+    }
+
+    return rezultat;
+}
+
 
 int main() {
 
