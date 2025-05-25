@@ -1,0 +1,5 @@
+1 AnaPopescu 9.50 2
+2 IonIonescu 8.30 1
+3 MariaStan 7.90 3
+4 GeorgeEnescu 6.50 2
+5 AndreiVasile 9.80 1

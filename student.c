@@ -131,6 +131,19 @@ struct Student* filtreazaStudentiDupaMedie(struct Student* vector, int dim, int*
 }
 
 
+
+//functie care cauta un student dupa id si il afiseaza daca exista
+void cautaStudentDupaId(struct Student* vector, int dim, int idCautat) {
+    for (int i = 0; i < dim; i++) {
+        if (vector[i].id == idCautat) {
+            printf("\nStudent gasit:\n");
+            afisareStudent(vector[i]);
+            return;
+        }
+    }
+    printf("\nNu exista student cu id-ul %d.\n", idCautat);
+}
+
 int main() {
 
   //salvam studentii in fisier
@@ -158,6 +171,10 @@ int main() {
 
     dezalocareStudent(&s);
 
+    int idCautat;
+    printf("\nIntrodu ID-ul studentului pe care vrei sa-l cauti: ");
+    scanf("%d", &idCautat);
+    cautaStudentDupaId(studenti, nrStudenti, idCautat);
 
     return 0;
 }
