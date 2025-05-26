@@ -45,6 +45,16 @@ void afisareStudent(struct Student s) {
     printf("An de studiu: %d\n", s.anStudiu);
 }
 
+//functie care afiseaza studentul cu stele in functie de medie
+void afisareGraficStudent(struct Student s) {
+    printf("\n%s: ", s.nume);
+    int nrStele = (int)(s.medie + 0.5f); 
+    for (int i = 0; i < nrStele; i++) {
+        printf("*");
+    }
+    printf(" (%.2f)\n", s.medie);
+}
+
 //dezalocarememoria alocata pentru un student
 void dezalocareStudent(struct Student* s) {
     free(s->nume);
@@ -158,6 +168,12 @@ int main() {
     for (int i = 0; i < nrStudenti; i++) {
         afisareStudent(studenti[i]);
     }
+
+    printf("\n--- Reprezentare grafica a mediilor studentilor ---\n");
+    for (int i = 0; i < nrStudenti; i++) {
+        afisareGraficStudent(studenti[i]);
+    }
+
 
    //citim un student de la tastatura
     struct Student s = citireStudentDeLaTastatura();
