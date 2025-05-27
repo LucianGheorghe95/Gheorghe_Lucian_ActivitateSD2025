@@ -154,6 +154,20 @@ void cautaStudentDupaId(struct Student* vector, int dim, int idCautat) {
     printf("\nNu exista student cu id-ul %d.\n", idCautat);
 }
 
+//functie care sorteaza vectorul de studenti descrescator dupa medie
+void sorteazaStudentiDupaMedie(struct Student* vector, int dim) {
+    for (int i = 0; i < dim - 1; i++) {
+        for (int j = i + 1; j < dim; j++) {
+            if (vector[i].medie < vector[j].medie) {
+                struct Student temp = vector[i];
+                vector[i] = vector[j];
+                vector[j] = temp;
+            }
+        }
+    }
+}
+
+
 int main() {
 
   //salvam studentii in fisier
@@ -178,6 +192,14 @@ int main() {
    //citim un student de la tastatura
     struct Student s = citireStudentDeLaTastatura();
     afisareStudent(s);
+
+    // sortam studentii dupa medie
+    sorteazaStudentiDupaMedie(studenti, nrStudenti);
+    printf("\n--- Studentii sortati descrescator dupa medie ---\n");
+    for (int i = 0; i < nrStudenti; i++) {
+        afisareStudent(studenti[i]);
+    }
+
 
     //dezalocam memoria
     for (int i = 0; i < nrStudenti; i++) {
