@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="carte.c" />
     <ClCompile Include="Fisiere.c" />
     <ClCompile Include="Matrice.c" />
     <ClCompile Include="seminar2025.c" />
